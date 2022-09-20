@@ -9,6 +9,7 @@ import DiabetesMain as dia
 import Heart_Disease_Main as hrt
 import Mental_Health_Main as mlh
 import Stroke_Main as stm
+import sqlite3
 
 app = Flask(__name__)
 # for home page clear
