@@ -45,10 +45,10 @@ def result():
         Sex = request.form["Sex"]
 
     #x = joblib.load("DiabetesMain.py")  
-    X=dia.Predict_dia(bmi,Income,PhysHlth,Age,GenHlth,HighBP,HighChol,Smoker,Stroke,HeartDiseaseorAttack,PhysActivity,Veggies,HvyAlcoholConsump,DiffWalk,Sex)
-    res = str(X)
-    return res
-    return render_template("X" , result=res)
+        X=dia.Predict_dia(bmi,Income,PhysHlth,Age,GenHlth,HighBP,HighChol,Smoker,Stroke,HeartDiseaseorAttack,PhysActivity,Veggies,HvyAlcoholConsump,DiffWalk,Sex)
+        res = str(X)
+        return res
+    # return render_template("X" , result=res)
 
 @app.route("/Stroke_Form.html")
 def function():
@@ -78,7 +78,9 @@ def mental():
     return render_template("Mental_Form.html")
 @app.route("/Mental_Form.html" , methods = ['POST','GET'])
 def mental1():
+    print(request.form)
     if request.form =="POST":
+        
         Age = request.form['Age']
         Gender =  request.form.get("Gender")
         Country = request.form.get("Country")
@@ -103,12 +105,14 @@ def mental1():
         mental_vs_physical = request.form.get("mental_vs_physical")
         obs_consequence = request.form.get("obs_consequence")
 
-    Y = mlh.predict(Age,Gender,Country,self_employed,family_history,treatment,work_interfere,no_employees,remote_work,tech_company,benefits,care_options,wellness_program,seek_help,anonymity,leave,phys_health_consequence,coworkers,supervisor,mental_health_interview,phys_health_interview,mental_vs_physical,obs_consequence)
-    res3 = str(Y)
-    return res3
+        Y = mlh.predict(Age,Gender,Country,self_employed,family_history,treatment,work_interfere,no_employees,remote_work,tech_company,benefits,care_options,wellness_program,seek_help,anonymity,leave,phys_health_consequence,coworkers,supervisor,mental_health_interview,phys_health_interview,mental_vs_physical,obs_consequence)
+        res3 = str(Y)
+        print("Hello")
+        return render_template("<h1>{res3}</h1>",result=res3)
+        
+    return render_template("<h1>Hello world</h1>")
 
-    return render_template("Y",result=res3)
-
+     
 
 @app.route("/Heart_Form.html")
 def fun():
@@ -117,6 +121,7 @@ def fun():
 @app.route("/Heart_Form.html",methods = ["POST" , "GET"])
 def heart():
     if request.form == "POST":
+       
         cp = request.form["cp"]
         age = request.form["Age"]
         sex = request.form["Sex"] 
@@ -130,8 +135,8 @@ def heart():
         slope = request.form["Slope_of_peak_exercise"]
         ca= request.form["ca"]
         thal=request.form["thal"]
-    z = hrt.Prediction(cp,age,sex,trestbps,sex,trestbps,chol,fbs,restecg,thalatc,exang,Oldpeak,slope,ca,thal)   
-    res = z[0]
+        z = hrt.Prediction(cp,age,sex,trestbps,sex,trestbps,chol,fbs,restecg,thalatc,exang,Oldpeak,slope,ca,thal)   
+        res = z
     return render_template("z", result=res)
 
 
