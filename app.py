@@ -12,6 +12,11 @@ import Stroke_Main as stm
 import sqlite3
 
 app = Flask(__name__)
+
+connection_dia = sqlite3.connect('dia_pred.db')
+cursor_dia = connection_dia.cursor()
+cursor_dia.execute("create table diadb (bmi,Income,PhysHlth,Age,GenHlth,HighBP,HighChol,Smoker,Stroke,HeartDiseaseorAttack,PhysActivity,Veggies,HvyAlcoholConsump,DiffWalk,Sex)")
+
 # for home page clear
 @app.route("/")
 def home():
