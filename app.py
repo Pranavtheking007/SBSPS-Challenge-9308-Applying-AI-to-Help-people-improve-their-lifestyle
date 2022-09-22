@@ -12,6 +12,7 @@ import Stroke_Main as stm
 import sqlite3
 
 app = Flask(__name__)
+app.secret_key = "URRSWE_1234"
 
 connection_dia = sqlite3.connect('dia_pred.db')
 cursor_dia = connection_dia.cursor()
@@ -145,7 +146,7 @@ def heart():
         res = z
     return render_template("z", result=res)
 
-
+connection_dia.commit()
 connection_dia.close()
 
      
