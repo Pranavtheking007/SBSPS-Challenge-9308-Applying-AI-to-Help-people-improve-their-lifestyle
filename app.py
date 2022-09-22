@@ -49,7 +49,7 @@ def result():
         X=dia.Predict_dia(bmi,Income,PhysHlth,Age,GenHlth,HighBP,HighChol,Smoker,Stroke,HeartDiseaseorAttack,PhysActivity,Veggies,HvyAlcoholConsump,DiffWalk,Sex)
         res = str(X)
         return res
-    # return render_template("X" , result=res)
+    return render_template("X" , result=res)
 
 @app.route("/Stroke_Form.html")
 def function():

@@ -56,5 +56,5 @@ def Predict_dia(BMI,Income,PhysHlth,Age,GenHlth,HighBP,HighChol,Smoker,Stroke,He
     dia_ct=ct.transform(df)
     Result = Model.predict(dia_ct)
 
-    #result = Result.argmax(axis=1)
-    return Result
+    result = Result.argmax(axis=1)
+    return result
