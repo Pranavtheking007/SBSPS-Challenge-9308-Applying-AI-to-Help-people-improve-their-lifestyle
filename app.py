@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 connection_dia = sqlite3.connect('dia_pred.db')
 cursor_dia = connection_dia.cursor()
-cursor_dia.execute("create table diadb (bmi,Income,PhysHlth,Age,GenHlth,HighBP,HighChol,Smoker,Stroke,HeartDiseaseorAttack,PhysActivity,Veggies,HvyAlcoholConsump,DiffWalk,Sex)")
+cursor_dia.execute("create table diadb (bmi real,Income real,PhysHlth real,Age integer,GenHlth real,HighBP integer,HighChol integer,Smoker integer,Stroke integer,HeartDiseaseorAttack integer,PhysActivity integer,Veggies integer,HvyAlcoholConsump integer,DiffWalk integer,Sex integer)")
 
 # for home page clear
 @app.route("/")
@@ -146,7 +146,7 @@ def heart():
     return render_template("z", result=res)
 
 
-
+connection_dia.close()
 
      
 
