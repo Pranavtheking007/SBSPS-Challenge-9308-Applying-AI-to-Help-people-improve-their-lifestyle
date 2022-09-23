@@ -1,6 +1,6 @@
 #from crypt import methods
 import flask
-from flask import Flask , render_template , url_for , request , jsonify , redirect 
+from flask import Flask , render_template , url_for , request , jsonify , redirect , session, g
 import tensorflow
 import jinja2
 from datetime import datetime
@@ -13,10 +13,6 @@ import sqlite3
 
 app = Flask(__name__)
 app.secret_key = "URRSWE_1234"
-
-connection_dia = sqlite3.connect('dia_pred.db')
-cursor_dia = connection_dia.cursor()
-cursor_dia.execute("create table diadb (bmi real,Income real,PhysHlth real,Age integer,GenHlth real,HighBP integer,HighChol integer,Smoker integer,Stroke integer,HeartDiseaseorAttack integer,PhysActivity integer,Veggies integer,HvyAlcoholConsump integer,DiffWalk integer,Sex integer)")
 
 # for home page clear
 @app.route("/")
@@ -31,6 +27,15 @@ def diagnose():
 def dispform():
     return render_template("dia_form.html")
 #form k badd ka isko link krna h main prediction model se
+
+def get_diaDB():
+    db = getattr(g, '_database',None)
+    if db is None:
+        db = g._database_  = sqlite3.connect("dia_pred.db")
+        cursor_dia = db.cursor()
+        cursor_dia.execute()
+    return db
+
 @app.route('/dia_form.html', methods = ['POST', 'GET'])
 def result():
     if request.method == 'POST':
@@ -55,7 +60,7 @@ def result():
         X=dia.Predict_dia(bmi,Income,PhysHlth,Age,GenHlth,HighBP,HighChol,Smoker,Stroke,HeartDiseaseorAttack,PhysActivity,Veggies,HvyAlcoholConsump,DiffWalk,Sex)
         res = str(X)
         return res
-    return render_template("X" , result=res)
+    return render_template("bg.html" , result=res)
 
 @app.route("/Stroke_Form.html")
 def function():
@@ -85,9 +90,6 @@ def mental():
     return render_template("Mental_Form.html")
 @app.route("/Mental_Form.html" , methods = ['POST','GET'])
 def mental1():
-    print(request.form)
-    if request.form =="POST":
-        
         Age = request.form['Age']
         Gender =  request.form.get("Gender")
         Country = request.form.get("Country")
@@ -115,9 +117,8 @@ def mental1():
         Y = mlh.predict(Age,Gender,Country,self_employed,family_history,treatment,work_interfere,no_employees,remote_work,tech_company,benefits,care_options,wellness_program,seek_help,anonymity,leave,phys_health_consequence,coworkers,supervisor,mental_health_interview,phys_health_interview,mental_vs_physical,obs_consequence)
         res3 = str(Y)
         print("Hello")
-        return render_template("<h1>{res3}</h1>",result=res3)
-        
-    return render_template("<h1>Hello world</h1>")
+        return res3
+        return render_template('Y',result=res3)
 
      
 
@@ -145,15 +146,17 @@ def heart():
         z = hrt.Prediction(cp,age,sex,trestbps,sex,trestbps,chol,fbs,restecg,thalatc,exang,Oldpeak,slope,ca,thal)   
         res = z
     return render_template("z", result=res)
-
-connection_dia.commit()
-connection_dia.close()
-
      
 
 if __name__ == "__main__":
     app.run(debug = True)   
 
+
+@app.teardown_appcontext
+def close_connection1(exception):
+    db = getattr(g, '_database',None)
+    if db is not None:
+        db.close()
 
 #for form access
 #@app.route("/form.html")

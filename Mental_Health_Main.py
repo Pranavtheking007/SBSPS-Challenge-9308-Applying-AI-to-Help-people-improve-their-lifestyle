@@ -10,6 +10,7 @@ import tensorflow as tf
 model =  tf.keras.models.load_model("Mental_model_new_hdf5.h5")
 
 Mental = pd.read_csv("https://raw.githubusercontent.com/kuchbhi-kunal/nidan/main/survey%20(1).csv")
+Mental.drop("comments",axis=1,inplace=True)
 Mental.drop("Timestamp",axis=1,inplace=True)
 Mental.drop("state",axis=1,inplace=True)
 Drop_list = [584, 613, 1159, 1209,11, 209, 680, 1179,139, 204, 526,418, 478, 1247,97, 180, 869,93, 192, 670,819, 821,1069, 1229,277, 1168,729, 1110,37, 281,1140,1174,989,1178,753,1208,750,334,655,639,532,523,421,409,390,319,133,129,1213]
@@ -22,6 +23,7 @@ Y=Mental['mental_health_consequence']
 X_train, X_test, Y_train1, Y_test = train_test_split(X,Y,test_size=0.2,random_state=42,stratify=Y)
 
 Columns = list(X_train.columns)
+Columns.remove('Age')
 
 ct = make_column_transformer(
     (MinMaxScaler(), ['Age']),
