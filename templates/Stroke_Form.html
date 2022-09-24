@@ -11,7 +11,7 @@
 
 <div class="container">
   <div class="title">Stroke</div>
-  <form target="_blank" action="#" method="POST" name="mentalhealth">
+  <form action="Stroke_Form.html" method="POST" name="mentalhealth">
     <div class="user__details">
       
 
@@ -131,8 +131,6 @@
         <input type="number" name="bmi" placeholder="Weight/Height">
       </div>
 
-     
-
       
 
       
@@ -140,14 +138,28 @@
       
 
     </div>
+
     
     <div class="button">
+       
+      
     
         <input ; type="submit" value="Diagnose">
+        <div>   
+
+      </div>
+
+      
+        
     
 
     </div>
   </form>
+ 
+  {% if data_Pred == 'tf.Tensor([[1.]], shape=(1, 1), dtype=float32)' %}
+    <p>Fuckoff</p>{{data_Pred}}
+  {%endif%}
+    
 </div>
 
   

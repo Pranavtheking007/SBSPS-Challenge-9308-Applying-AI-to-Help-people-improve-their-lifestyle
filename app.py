@@ -22,6 +22,7 @@ def home():
 @app.route("/choice.html")
 def diagnose():
     return render_template("choice.html")
+
 #for diabeties form
 @app.route('/dia_form.html')
 def dispform():
@@ -33,8 +34,7 @@ def get_diaDB():
     if db is None:
         db = g._database_  = sqlite3.connect("dia_pred.db")
         cursor_dia = db.cursor()
-        cursor_dia.execute()
-    return db
+    return cursor_dia
 
 @app.route('/dia_form.html', methods = ['POST', 'GET'])
 def result():
@@ -56,14 +56,22 @@ def result():
         DiffWalk = request.form["DiffWalk"]
         Sex = request.form["Sex"]
 
-    #x = joblib.load("DiabetesMain.py")  
-        X=dia.Predict_dia(bmi,Income,PhysHlth,Age,GenHlth,HighBP,HighChol,Smoker,Stroke,HeartDiseaseorAttack,PhysActivity,Veggies,HvyAlcoholConsump,DiffWalk,Sex)
-        res = str(X)
-        return res
-    return render_template("X" , result=res)
+        cursor1 = get_diaDB()
+        query_1 = "INSERT INTO diadb VALUES ({n1},{n2},{n3},{n4},{n5},{n6},{n7},{n8},{n9},{n10},{n11},{n12},{n13},{n14},{n15})".format(n1=bmi,n2=Income,n3=PhysHlth,n4=Age,n5=GenHlth,n6=HighBP,n7=HighChol,n8=Smoker,n9=Stroke,n10=HeartDiseaseorAttack,n11=PhysActivity,n12=Veggies,n13=HvyAlcoholConsump,n14=DiffWalk,n15=Sex)
+        cursor1.execute(query_1)
 
-@app.route("/Stroke_Form.html")
-def function():
+@app.route('/bg.html')
+def resultpage_dia():
+    return render_template("bg.html")
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database',None)
+    if db is not None:
+        db.close()
+
+@app.route('/Stroke_Form.html')
+def resultpage_Stroke():
     return render_template("Stroke_Form.html")
 
 @app.route("/Stroke_Form.html", methods = ["POST","GET"])
@@ -81,9 +89,9 @@ def fun1():
         smoking_status = request.form.get("smoking_status")
         
         w = stm.Predictions(gender, age, hypertension, heart_disease, ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status)
+    
         res1 = str(w)
-        return res1
-    return render_template("w",result=res1)
+    return render_template("Stroke_Form.html",data_pred = res1)
 
 @app.route("/Mental_Form.html")
 def mental():
@@ -116,9 +124,7 @@ def mental1():
 
         Y = mlh.predict(Age,Gender,Country,self_employed,family_history,treatment,work_interfere,no_employees,remote_work,tech_company,benefits,care_options,wellness_program,seek_help,anonymity,leave,phys_health_consequence,coworkers,supervisor,mental_health_interview,phys_health_interview,mental_vs_physical,obs_consequence)
         res3 = str(Y)
-        print("Hello")
-        return res3
-        return render_template('Y',result=res3)
+        return render_template('Mental_Form.html',data_Mental=res3)
 
      
 
@@ -128,7 +134,6 @@ def fun():
 
 @app.route("/Heart_Form.html",methods = ["POST" , "GET"])
 def heart():
-    if request.form == "POST":
        
         cp = request.form["cp"]
         age = request.form["Age"]
@@ -143,9 +148,14 @@ def heart():
         slope = request.form["Slope_of_peak_exercise"]
         ca= request.form["ca"]
         thal=request.form["thal"]
-        z = hrt.Prediction(cp,age,sex,trestbps,sex,trestbps,chol,fbs,restecg,thalatc,exang,Oldpeak,slope,ca,thal)   
-        res = z
-    return render_template("z", result=res)
+        z = hrt.Predictions_hrt(age,cp,age,sex,trestbps,chol,fbs,restecg,thalatc,exang,Oldpeak,slope,ca,thal)   
+        res = str(z)
+        return res
+        return render_template("z", result=res)
+
+@app.route('/bg.html')
+def result_page():
+    return render_template("bg.html")
      
 
 if __name__ == "__main__":

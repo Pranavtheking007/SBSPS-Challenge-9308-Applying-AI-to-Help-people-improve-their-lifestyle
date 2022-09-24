@@ -3,7 +3,7 @@ import pandas as pd
 
 model = joblib.load("Heart_Disease-Model.joblib")
 
-def Prediction(Age,cp,age,sex,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,Model=model):
+def Predictions_hrt(Age,cp,age,sex,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,Model=model):
     par = {
         "Age":[Age],
         "cp":[cp],
