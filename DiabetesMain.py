@@ -11,7 +11,7 @@ ct = make_column_transformer(
     (OneHotEncoder(handle_unknown='ignore'),['HighBP','HighChol','Smoker','Stroke','HeartDiseaseorAttack','PhysActivity','Veggies','HvyAlcoholConsump','DiffWalk','Sex'])
 )
 
-diabetes = pd.read_csv("https://raw.githubusercontent.com/kuchbhi-kunal/nidan/main/diabetes_012_health_indicators_BRFSS2015.csv")
+diabetes = pd.read_csv("https://raw.githubusercontent.com/kuchbhi-kunal/nidan/main/diabetes_binary_5050split_health_indicators_BRFSS2015.csv")
 diabetes.drop("Fruits",axis=1,inplace=True)
 diabetes.drop("AnyHealthcare",axis=1,inplace=True)
 diabetes.drop("NoDocbcCost",axis=1,inplace=True)
@@ -19,8 +19,8 @@ diabetes.drop("MentHlth",axis=1,inplace=True)
 diabetes.drop("CholCheck",axis=1,inplace=True)
 diabetes.drop("Education",axis=1,inplace=True)
 
-X = diabetes.drop("Diabetes_012",axis=1)
-Y = diabetes["Diabetes_012"]
+X = diabetes.drop('Diabetes_binary',axis=1)
+Y = diabetes['Diabetes_binary']
 
 X_train, X_test, Y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42,stratify=Y)
 
@@ -30,7 +30,7 @@ X_train_ct = ct.transform(X_train)
 
 print(X_train_ct.shape)
 
-model =  tf.keras.models.load_model("Diabetes_model_new_hdf5.h5")
+model =  tf.keras.models.load_model("Diabetes_model_Binary_hdf5.h5")
 
 
 def Predict_dia(BMI,Income,PhysHlth,Age,GenHlth,HighBP,HighChol,Smoker,Stroke,HeartDisease,PhysActivity,Veggies,HeavyAlcoholConsump,DiffWalk,Sex,ct=ct,Model=model):

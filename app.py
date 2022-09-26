@@ -60,7 +60,9 @@ def result():
         res = str(X)
 
         if(res=='[0]'):
-            res="Congratulations You are leading a great lifest \nFuck OFF"
+            res="Congratulations You are leading a great and Health Life!!!!"
+        else:
+            res="You are showing strong signs of having Diabetes or at pre-stage of it. Kindly change your Lifestyle to accomodate for a better and healthier life, and consult a doctor as soon as possible"
         return render_template("dia_form.html" , data_dia=res)
 
 @app.route('/bg.html')
@@ -95,9 +97,9 @@ def fun1():
     
         res1 = str(w)
         if(res1 == 'tf.Tensor([[0.]], shape=(1, 1), dtype=float32)'):
-            res1 = 'Hello'
+            res1 = 'Congratulations!!!!! You dont show any signs of suffering from Stroke'
         else:
-            res1 = 'Try again'
+            res1 = 'You are showing strong signs of suffering from Stroke or suffering from it in a near future. Kindly change your Lifestyle to accomodate for a better and healthier life, and consult a doctor as soon as possible'
     return render_template("Stroke_Form.html",data_pred = res1)
 
 @app.route("/Mental_Form.html")
