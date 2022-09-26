@@ -56,9 +56,12 @@ def result():
         DiffWalk = request.form["DiffWalk"]
         Sex = request.form["Sex"]
 
-        cursor1 = get_diaDB()
-        query_1 = "INSERT INTO diadb VALUES ({n1},{n2},{n3},{n4},{n5},{n6},{n7},{n8},{n9},{n10},{n11},{n12},{n13},{n14},{n15})".format(n1=bmi,n2=Income,n3=PhysHlth,n4=Age,n5=GenHlth,n6=HighBP,n7=HighChol,n8=Smoker,n9=Stroke,n10=HeartDiseaseorAttack,n11=PhysActivity,n12=Veggies,n13=HvyAlcoholConsump,n14=DiffWalk,n15=Sex)
-        cursor1.execute(query_1)
+        X=dia.Predict_dia(bmi,Income,PhysHlth,Age,GenHlth,HighBP,HighChol,Smoker,Stroke,HeartDiseaseorAttack,PhysActivity,Veggies,HvyAlcoholConsump,DiffWalk,Sex)
+        res = str(X)
+
+        if(res=='[0]'):
+            res="Congratulations You are leading a great lifest \nFuck OFF"
+        return render_template("dia_form.html" , data_dia=res)
 
 @app.route('/bg.html')
 def resultpage_dia():
@@ -91,6 +94,10 @@ def fun1():
         w = stm.Predictions(gender, age, hypertension, heart_disease, ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status)
     
         res1 = str(w)
+        if(res1 == 'tf.Tensor([[0.]], shape=(1, 1), dtype=float32)'):
+            res1 = 'Hello'
+        else:
+            res1 = 'Try again'
     return render_template("Stroke_Form.html",data_pred = res1)
 
 @app.route("/Mental_Form.html")
@@ -124,6 +131,8 @@ def mental1():
 
         Y = mlh.predict(Age,Gender,Country,self_employed,family_history,treatment,work_interfere,no_employees,remote_work,tech_company,benefits,care_options,wellness_program,seek_help,anonymity,leave,phys_health_consequence,coworkers,supervisor,mental_health_interview,phys_health_interview,mental_vs_physical,obs_consequence)
         res3 = str(Y)
+
+        
         return render_template('Mental_Form.html',data_Mental=res3)
 
      
