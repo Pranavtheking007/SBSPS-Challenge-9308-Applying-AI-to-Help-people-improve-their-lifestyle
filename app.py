@@ -134,7 +134,12 @@ def mental1():
         Y = mlh.predict(Age,Gender,Country,self_employed,family_history,treatment,work_interfere,no_employees,remote_work,tech_company,benefits,care_options,wellness_program,seek_help,anonymity,leave,phys_health_consequence,coworkers,supervisor,mental_health_interview,phys_health_interview,mental_vs_physical,obs_consequence)
         res3 = str(Y)
 
-        
+        if(res3=='[0]'):
+            res3 = 'You are totally Stress Free!!!! You are living a happy life and inspire others to do so'
+        elif(res3=='[1]'):
+            res3 = 'You are somewhat confused in life and need a direction to work upon'
+        else:
+            res3='You need a therapist ASAP'
         return render_template('Mental_Form.html',data_Mental=res3)
 
      
@@ -161,8 +166,11 @@ def heart():
         thal=request.form["thal"]
         z = hrt.Predictions_hrt(age,cp,age,sex,trestbps,chol,fbs,restecg,thalatc,exang,Oldpeak,slope,ca,thal)   
         res = str(z)
-        return res
-        return render_template("z", result=res)
+        if(res == '[0]'):
+            res = 'Congratulations!!!!! You dont show any signs of suffering from any kind of Heart Disease'
+        else:
+            res = 'You are showing strong signs of suffering from Heart Disease. Kindly change your Lifestyle to accomodate for a better and healthier life, and consult a doctor as soon as possible'
+        return render_template("Heart_Form.html", data_hrt=res)
 
 @app.route('/bg.html')
 def result_page():
