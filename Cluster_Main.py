@@ -34,5 +34,20 @@ Y = Y.iloc[:, [0, 1]].values
 Z = Fit_Bit[['Value', 'Calories']]
 Z = Z.iloc[:, [0, 1]].values
 
-def tips_pred(TotalSteps,TotalDistance,VeryActiveDistance,VeryActiveMinutes,SedentaryMinutes,Calories,WeightKg,BMI,Value,AverageIntensity,TotalTimeInBed):
-    
+def tips_pred(TotalSteps,TotalDistance,VeryActiveDistance,VeryActiveMinutes,SedentaryMinutes,Calories,WeightKg,BMI,Value,AverageIntensity,TotalTimeInBed,Model=model):
+    preds = {
+        "TotalSteps":[TotalSteps],
+        "TotalDistance":[TotalDistance],
+        "VeryActiveDistance":[VeryActiveDistance],
+        "VeryActiveMinutes":[VeryActiveMinutes],
+        "SedentaryMinutes":[SedentaryMinutes],
+        "Calories":[Calories],
+        "WeightKg":[WeightKg],
+        "BMI":[BMI],
+        "Value":[Value],
+        "AverageIntensity":[AverageIntensity],
+        "TotalTimeInBed":[TotalTimeInBed]
+    }
+
+    df = pd.DataFrame(preds)
+    #Result = Model.predict(dia_ct)
