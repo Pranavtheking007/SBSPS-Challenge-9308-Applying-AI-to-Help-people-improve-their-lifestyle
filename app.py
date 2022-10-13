@@ -18,6 +18,10 @@ app.secret_key = "URRSWE_1234"
 @app.route("/")
 def home():
    return render_template("index.html")
+@app.route("/health_tips.html") 
+def fun_11():
+    return render_template("health_tips.html")
+
 #for choice page
 @app.route("/choice.html")
 def diagnose():
@@ -68,6 +72,7 @@ def result():
 @app.route('/bg.html')
 def resultpage_dia():
     return render_template("bg.html")
+
 
 @app.teardown_appcontext
 def close_connection(exception):
