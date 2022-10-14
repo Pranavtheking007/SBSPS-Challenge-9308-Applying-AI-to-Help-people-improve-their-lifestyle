@@ -64,10 +64,9 @@ def result():
         res = str(X)
 
         if(res=='[0]'):
-            res="Congratulations You are leading a great and Health Life!!!!"
+            return render_template('Diabetes1.html')
         else:
-            res="You are showing strong signs of having Diabetes or at pre-stage of it. Kindly change your Lifestyle to accomodate for a better and healthier life, and consult a doctor as soon as possible"
-        return render_template("dia_form.html" , data_dia=res)
+            return render_template("Diabetes2.html")
 
 @app.route('/bg.html')
 def resultpage_dia():
@@ -102,10 +101,9 @@ def fun1():
     
         res1 = str(w)
         if(res1 == 'tf.Tensor([[0.]], shape=(1, 1), dtype=float32)'):
-            res1 = 'Congratulations!!!!! You dont show any signs of suffering from Stroke'
+            return render_template('stroke1.html')
         else:
-            res1 = 'You are showing strong signs of suffering from Stroke or suffering from it in a near future. Kindly change your Lifestyle to accomodate for a better and healthier life, and consult a doctor as soon as possible'
-    return render_template("Stroke_Form.html",data_pred = res1)
+            return render_template("stroke2.html")
 
 @app.route("/Mental_Form.html")
 def mental():
@@ -140,12 +138,11 @@ def mental1():
         res3 = str(Y)
 
         if(res3=='[0]'):
-            res3 = 'You are totally Stress Free!!!! You are living a happy life and inspire others to do so'
+            return render_template('Mental1.html') 
         elif(res3=='[1]'):
-            res3 = 'You are somewhat confused in life and need a direction to work upon'
+            return render_template('Mental2.html')
         else:
-            res3='You need a therapist ASAP'
-        return render_template('Mental_Form.html',data_Mental=res3)
+            return render_template('Mental3.html')
 
      
 
@@ -172,14 +169,11 @@ def heart():
         z = hrt.Predictions_hrt(age,cp,age,sex,trestbps,chol,fbs,restecg,thalatc,exang,Oldpeak,slope,ca,thal)   
         res = str(z)
         if(res == '[0]'):
-            res = 'Congratulations!!!!! You dont show any signs of suffering from any kind of Heart Disease'
+            return render_template('Heart1.html')
         else:
-            res = 'You are showing strong signs of suffering from Heart Disease. Kindly change your Lifestyle to accomodate for a better and healthier life, and consult a doctor as soon as possible'
-        return render_template("Heart_Form.html", data_hrt=res)
+            return render_template("Heart2.html")
 
-@app.route('/bg.html')
-def result_page():
-    return render_template("bg.html")
+
      
 
 if __name__ == "__main__":
