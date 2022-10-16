@@ -49,5 +49,15 @@ def tips_pred(TotalSteps,TotalDistance,VeryActiveDistance,VeryActiveMinutes,Sede
         "TotalTimeInBed":[TotalTimeInBed]
     }
 
-    df = pd.DataFrame(preds)
-    #Result = Model.predict(dia_ct)
+    Fit_Bit1 = pd.DataFrame(preds)
+
+    X = Fit_Bit1[['TotalSteps', 'VeryActiveMinutes']]
+    X = X.iloc[:, [0, 1]].values
+    Y = Fit_Bit1[['TotalDistance', 'VeryActiveDistance']]
+    Y = Y.iloc[:, [0, 1]].values
+    Z = Fit_Bit1[['Value', 'Calories']]
+    Z = Z.iloc[:, [0, 1]].values
+    
+    result=Model.predict(Z)
+
+    return result

@@ -10,6 +10,7 @@ import Heart_Disease_Main as hrt
 import Mental_Health_Main as mlh
 import Stroke_Main as stm
 import sqlite3
+import Cluster_Main as CM
 
 app = Flask(__name__)
 app.secret_key = "URRSWE_1234"
@@ -18,9 +19,38 @@ app.secret_key = "URRSWE_1234"
 @app.route("/")
 def home():
    return render_template("index.html")
+
 @app.route("/health_tips.html") 
 def fun_11():
-    return render_template("health_tips.html")
+    return render_template('health_tips.html')
+
+@app.route("/health_tips.html" ,methods = ['POST', 'GET'])
+def fun_12():
+        TotalSteps = request.form["TotalSteps"]
+        TotalDistance = request.form["TotalDistance"]
+        VeryActiveDistance = request.form["VeryActiveDistance"]
+        VeryActiveMinutes = request.form["VeryActiveMinutes"]
+        SedentaryMinutes = request.form["SedentaryMinutes"]
+        Calories = request.form["Calories"]
+        WeightKg = request.form["WeightKg"]
+        BMI = request.form["BMI"]
+        Value = request.form["Value"]
+        AverageIntensity = request.form["AverageIntensity"]
+        TotalTimeInBed = request.form["TotalTimeInBed"]
+
+        res = CM.tips_pred(TotalSteps,TotalDistance,VeryActiveDistance,VeryActiveMinutes,SedentaryMinutes,Calories,WeightKg,BMI,Value,AverageIntensity,TotalTimeInBed)
+        X=str(res)
+
+        
+        if (X=='[0]'):
+            X='You need to maintain a good diet'
+        elif(X=='[1]'):
+            X='You are maintaining an average lifestyle, keep up with it'
+        elif(X=='[2]'):
+            X='You need to maintain a diet and need to increase your workout hours'
+        else:
+            X='You need to maintain a good diet with good workout hours, we recommend you to consult a dietician for the same.'
+        return render_template("health_tips.html",data_pred=X)
 
 #for choice page
 @app.route("/choice.html")
